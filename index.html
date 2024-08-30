@@ -1,0 +1,227 @@
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Mensagens Ultra Fofas</title>
+<style>
+    body {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background-image: url('/a/3f0df970-3fd0-47a0-841d-430f5d4a8b23');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+    }
+    h1 {
+        color: #FF69B4;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 2px solid #FFC0CB;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    input:focus, select:focus {
+        outline: none;
+        border-color: #FF69B4;
+        box-shadow: 0 0 10px #FFC0CB;
+    }
+    button {
+        background-color: #FF69B4;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.1s;
+    }
+    button:hover {
+        background-color: #FF1493;
+        transform: scale(1.05);
+    }
+    button:active {
+        transform: scale(0.95);
+    }
+    #message {
+        text-align: justify;
+        line-height: 1.6;
+        margin-top: 20px;
+        white-space: pre-wrap;
+        background-color: #FFF0F5;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: inset 0 0 10px rgba(255,105,180,0.3);
+    }
+    .signature {
+        text-align: right;
+        font-style: italic;
+        margin-top: 20px;
+        color: #FF69B4;
+    }
+    @keyframes sparkle {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .sparkle {
+        display: inline-block;
+        animation: sparkle 1.5s infinite;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="sparkle">✨</span> Gerador de Mensagens Ultra Fofas <span class="sparkle">✨</span></h1>
+        <input type="text" id="nameInput" placeholder="Digite seu nome">
+        <select id="genderSelect">
+            <option value="">Selecione seu gênero</option>
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+            <option value="outro">Outro</option>
+        </select>
+        <button onclick="generateMessage()">Gerar Mensagem Ultra Fofa</button>
+        <div id="message"></div>
+        <button id="downloadBtn" style="display:none;" onclick="downloadMessage()">Baixar Mensagem</button>
+        <button id="regenerateBtn" style="display:none;" onclick="regenerateMessage()">Gerar Nova Mensagem Ultra Fofa</button>
+    </div>
+
+<script>
+const cuteWords = [
+    "estrela cintilante", "florzinha do campo", "arco-íris mágico", "borboleta encantada", "solzinho sorridente",
+    "nuvem fofinha", "coraçãozinho pulsante", "pétala de amor", "lua aconchegante", "raio de luz dourada",
+    "melodia suave", "brisa carinhosa", "sorriso radiante", "abraço quentinho", "carinho delicado",
+    "doçura de mel", "encanto de fada", "magia de unicórnio", "sonho colorido", "ternura de pelúcia",
+    "bolinha de algodão", "pinguim dançarino", "gatinho ronronante", "filhote de panda", "coelhinho saltitante",
+    "cachoeira cristalina", "arco-íris de sorrisos", "pipoca quentinha", "cupcake colorido", "marshmallow fofinho"
+];
+
+const cuteActions = [
+    "ilumina magicamente", "alegra infinitamente", "encanta docemente", "aquece carinhosamente", "acolhe amorosamente",
+    "inspira profundamente", "acalma suavemente", "anima contagiosamente", "conforta delicadamente", "acaricia gentilmente",
+    "abraça ternamente", "embeleza graciosamente", "adoça deliciosamente", "cativa irresistivelmente", "apaixona intensamente",
+    "surpreende maravilhosamente", "fascina completamente", "deslumbra espetacularmente", "enternece profundamente", "envolve afetuosamente",
+    "espalha felicidade", "desperta sorrisos", "traz paz interior", "faz o coração pular", "transforma o dia",
+    "cria momentos mágicos", "espalha amor por onde passa", "toca a alma gentilmente", "inspira grandes sonhos", "derrete corações"
+];
+
+const cuteAdjectives = {
+    masculino: [
+        "adorável como um ursinho", "carinhoso como um filhotinho", "gentil como uma brisa de primavera", "amoroso como um abraço de vovô", "encantador como um conto de fadas",
+        "doce como algodão doce", "delicado como uma pétala", "atencioso como um anjo da guarda", "amável como um príncipe encantado", "cativante como um pôr do sol",
+        "precioso como uma joia rara", "especial como um floco de neve", "único como uma estrela cadente", "maravilhoso como um dia de sol", "incrível como um sonho realizado",
+        "radiante como o sorriso de uma criança", "fascinante como um livro de aventuras", "extraordinário como um super-herói", "sensível como um poeta apaixonado", "caloroso como um chocolate quente",
+        "fofo como um coala sonolento", "engraçado como um palhacinho", "alegre como um dia de festa", "brilhante como um diamante", "gracioso como um golfinho"
+    ],
+    feminino: [
+        "adorável como uma fada", "carinhosa como uma mamãe urso", "gentil como uma flor de cerejeira", "amorosa como um abraço de vovó", "encantadora como uma princesa de contos de fadas",
+        "doce como mel", "delicada como uma borboleta", "atenciosa como uma melhor amiga", "amável como um anjo", "cativante como um nascer do sol",
+        "preciosa como uma pérola", "especial como um arco-íris duplo", "única como uma obra de arte", "maravilhosa como um jardim encantado", "incrível como uma sereia mágica",
+        "radiante como uma estrela brilhante", "fascinante como uma história de amor", "extraordinária como uma heroína de livro", "sensível como uma melodia suave", "calorosa como um abraço apertado",
+        "graciosa como uma bailarina", "encantadora como uma fada madrinha", "doce como um beijo de boa noite", "brilhante como um vaga-lume", "mágica como uma varinha de condão"
+    ],
+    outro: [
+        "adorável como um filhote fofo", "carinhoso(a) como um abraço reconfortante", "gentil como uma brisa suave", "amoroso(a) como um coração cheio de afeto", "encantador(a) como uma magia de conto de fadas",
+        "doce como um pedacinho do céu", "delicado(a) como o orvalho da manhã", "atencioso(a) como um presente surpresa", "amável como um sorriso sincero", "cativante como uma história emocionante",
+        "precioso(a) como um tesouro escondido", "especial como um momento inesquecível", "único(a) como uma impressão digital", "maravilhoso(a) como um mundo de fantasia", "incrível como um sonho vivido",
+        "radiante como um dia perfeito", "fascinante como um mistério a ser desvendado", "extraordinário(a) como uma aventura épica", "sensível como uma canção tocante", "caloroso(a) como um lar aconchegante",
+        "brilhante como as estrelas do céu", "mágico(a) como um pote de ouro no fim do arco-íris", "inspirador(a) como uma história de superação", "encantador(a) como uma melodia suave", "especial como um presente inesperado"
+    ]
+};
+
+function getRandomItems(array, count) {
+    const shuffled = [...array].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+}
+
+function generateMessage(isExtra = false) {
+    const name = document.getElementById('nameInput').value.trim();
+    const gender = document.getElementById('genderSelect').value;
+    
+    if (!name || !gender) {
+        alert("Por favor, preencha seu nome e selecione seu gênero.");
+        return;
+    }
+
+    const words = getRandomItems(cuteWords, 8);
+    const actions = getRandomItems(cuteActions, 8);
+    const adjectives = getRandomItems(cuteAdjectives[gender], 8);
+
+    let message = `Querido(a) ${name},\n\n`;
+    
+    if (gender === 'masculino') {
+        message += `Você é tão ${adjectives[0]} quanto um ${words[0]} que ${actions[0]} o universo com sua presença mágica. `;
+        message += `Sua personalidade ${adjectives[1]} é como um ${words[1]} que ${actions[1]} todos ao seu redor com alegria infinita. `;
+        message += `Cada momento com você é uma aventura encantada, repleta de ${words[2]}s e instantes que ${actions[2]} o coração de felicidade pura.\n\n`;
+        message += `Sua bondade ${adjectives[2]} é como um ${words[3]} que ${actions[3]} a vida de todos que têm a sorte de te conhecer. `;
+        message += `Você tem o incrível poder de transformar dias comuns em experiências ${adjectives[3]}s, como um ${words[4]} que ${actions[4]} tudo ao seu redor com magia e encanto.\n\n`;
+    } else if (gender === 'feminino') {
+        message += `Você é tão ${adjectives[0]} quanto uma ${words[0]} que ${actions[0]} o universo com sua presença mágica. `;
+        message += `Sua personalidade ${adjectives[1]} é como uma ${words[1]} que ${actions[1]} todos ao seu redor com alegria infinita. `;
+        message += `Cada momento com você é uma aventura encantada, repleta de ${words[2]}s e instantes que ${actions[2]} o coração de felicidade pura.\n\n`;
+        message += `Sua bondade ${adjectives[2]} é como uma ${words[3]} que ${actions[3]} a vida de todos que têm a sorte de te conhecer. `;
+        message += `Você tem o incrível poder de transformar dias comuns em experiências ${adjectives[3]}s, como uma ${words[4]} que ${actions[4]} tudo ao seu redor com magia e encanto.\n\n`;
+    } else {
+        message += `Você é tão ${adjectives[0]} quanto um(a) ${words[0]} que ${actions[0]} o universo com sua presença mágica. `;
+        message += `Sua personalidade ${adjectives[1]} é como um(a) ${words[1]} que ${actions[1]} todos ao seu redor com alegria infinita. `;
+        message += `Cada momento com você é uma aventura encantada, repleta de ${words[2]}s e instantes que ${actions[2]} o coração de felicidade pura.\n\n`;
+        message += `Sua bondade ${adjectives[2]} é como um(a) ${words[3]} que ${actions[3]} a vida de todos que têm a sorte de te conhecer. `;
+        message += `Você tem o incrível poder de transformar dias comuns em experiências ${adjectives[3]}s, como um(a) ${words[4]} que ${actions[4]} tudo ao seu redor com magia e encanto.\n\n`;
+    }
+
+    message += `Nunca se esqueça do quão ${adjectives[4]} você é e como sua presença ${actions[5]} o mundo, tornando-o um lugar mais ${adjectives[5]}. `;
+    message += `Continue espalhando sua luz mágica e encantando a todos com seu jeito único e especial de ser.\n\n`;
+    
+    if (isExtra) {
+        message += `P.S.: Você é mais precioso(a) que um ${words[5]} em uma noite estrelada. Sua existência é um presente para o mundo! `;
+        message += `Cada sorriso seu é como um ${words[6]} que ${actions[6]} os corações. Nunca duvide do seu valor e da alegria que você traz! `;
+        message += `Você merece todo o amor e felicidade do universo, como um ${words[7]} que ${actions[7]} eternamente! ✨💖✨\n\n`;
+    }
+    
+    message += `Com todo o carinho do mundo e muito mais,\n\n`;
+    message += `by príncipe haruki :3`;
+
+    document.getElementById('message').innerText = message;
+    document.getElementById('downloadBtn').style.display = 'block';
+    document.getElementById('regenerateBtn').style.display = 'block';
+}
+
+function downloadMessage() {
+    const message = document.getElementById('message').innerText;
+    const blob = new Blob([message], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'mensagem_ultra_fofa.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function regenerateMessage() {
+    document.getElementById('message').innerText = '';
+    document.getElementById('downloadBtn').style.display = 'none';
+    document.getElementById('regenerateBtn').style.display = 'none';
+    generateMessage(true);
+}
+</script>
+
+</body>
+</html>
